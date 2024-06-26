@@ -1,98 +1,125 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Progress } from '@/components/ui/progress';
-
-const ChecklistItem = ({ item, onToggle, isChecked }) => (
-  <div className="flex items-center space-x-2 mb-2">
-    <Checkbox id={item} checked={isChecked} onCheckedChange={() => onToggle(item)} />
-    <label htmlFor={item} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-      {item}
-    </label>
-  </div>
-);
-
-const ChecklistSection = ({ title, items, checkedItems, onToggle }) => (
-  <Card className="mb-4">
-    <CardHeader>
-      <CardTitle>{title}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      {items.map((item) => (
-        <ChecklistItem
-          key={item}
-          item={item}
-          isChecked={checkedItems.includes(item)}
-          onToggle={onToggle}
-        />
-      ))}
-    </CardContent>
-  </Card>
-);
-
-const DroneLeadGenChecklist = () => {
-  const sections = {
-    'Content Marketing': [
-      'Create blog posts on drone applications and industry trends',
-      'Develop e-books on drone technology advancements',
-      'Produce whitepapers on drone regulations and compliance',
-      'Design infographics showcasing drone capabilities',
-      'Record video tutorials on drone operation and maintenance'
-    ],
-    'Email Marketing': [
-      'Set up weekly or bi-weekly newsletter',
-      'Create automated email sequences for new subscribers',
-      'Segment email lists based on industry and interests',
-      'Send periodic special offers or promotions'
-    ],
-    'Social Media': [
-      'Maintain regular posts on LinkedIn, Twitter, and Facebook',
-      'Create engaging visual content for Instagram and YouTube',
-      'Participate in relevant LinkedIn groups and Twitter chats',
-      'Run paid social media advertising campaigns',
-      'Implement an employee advocacy program'
-    ],
-    'Webinars and Virtual Events': [
-      'Host monthly webinars on drone applications',
-      'Conduct Q&A sessions with drone experts',
-      'Offer virtual product demonstrations',
-      'Organize industry panel discussions'
-    ],
-    'Lead Magnets': [
-      'Create a free drone flight planning template',
-      'Develop an ROI calculator for drone services',
-      'Produce checklists for drone regulations compliance',
-      'Design a mini-course on getting started with commercial drones'
-    ]
-  };
-
-  const [checkedItems, setCheckedItems] = useState([]);
-
-  const handleToggle = (item) => {
-    setCheckedItems((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
-    );
-  };
-
-  const totalItems = Object.values(sections).flat().length;
-  const progress = (checkedItems.length / totalItems) * 100;
-
-  return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Commercial Drone Business Lead Generation Checklist</h1>
-      <Progress value={progress} className="mb-4" />
-      <p className="mb-4">Progress: {checkedItems.length} / {totalItems} ({progress.toFixed(1)}%)</p>
-      {Object.entries(sections).map(([title, items]) => (
-        <ChecklistSection
-          key={title}
-          title={title}
-          items={items}
-          checkedItems={checkedItems}
-          onToggle={handleToggle}
-        />
-      ))}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Drone Business Lead Generation Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        #progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: #3498db;
+            transition: width 0.5s ease-in-out;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        #progress-text {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Commercial Drone Business Lead Generation Checklist</h1>
+    
+    <div id="progress-container">
+        <div id="progress-bar"></div>
     </div>
-  );
-};
+    <div id="progress-text">Progress: 0%</div>
 
-export default DroneLeadGenChecklist;
+    <div id="checklist">
+        <h2>1. Content Marketing</h2>
+        <ul>
+            <li><input type="checkbox" id="cm1"><label for="cm1">Blog posts on drone applications, industry trends, and case studies</label></li>
+            <li><input type="checkbox" id="cm2"><label for="cm2">E-books on drone technology advancements or industry-specific uses</label></li>
+            <li><input type="checkbox" id="cm3"><label for="cm3">Whitepapers on drone regulations and compliance</label></li>
+            <li><input type="checkbox" id="cm4"><label for="cm4">Infographics showcasing drone capabilities and benefits</label></li>
+            <li><input type="checkbox" id="cm5"><label for="cm5">Video tutorials on drone operation and maintenance</label></li>
+        </ul>
+
+        <h2>2. Email Marketing</h2>
+        <ul>
+            <li><input type="checkbox" id="em1"><label for="em1">Weekly or bi-weekly newsletter with industry updates and company news</label></li>
+            <li><input type="checkbox" id="em2"><label for="em2">Automated email sequences for new subscribers</label></li>
+            <li><input type="checkbox" id="em3"><label for="em3">Segmented email lists based on industry, interests, or engagement level</label></li>
+            <li><input type="checkbox" id="em4"><label for="em4">Periodic special offers or promotions via email</label></li>
+        </ul>
+
+        <h2>3. Social Media</h2>
+        <ul>
+            <li><input type="checkbox" id="sm1"><label for="sm1">Regular posts on LinkedIn, Twitter, and Facebook</label></li>
+            <li><input type="checkbox" id="sm2"><label for="sm2">Engaging visual content on Instagram and YouTube</label></li>
+            <li><input type="checkbox" id="sm3"><label for="sm3">Participation in relevant LinkedIn groups and Twitter chats</label></li>
+            <li><input type="checkbox" id="sm4"><label for="sm4">Paid social media advertising campaigns</label></li>
+            <li><input type="checkbox" id="sm5"><label for="sm5">Employee advocacy program for wider reach</label></li>
+        </ul>
+
+        <h2>4. Webinars and Virtual Events</h2>
+        <ul>
+            <li><input type="checkbox" id="we1"><label for="we1">Monthly webinars on drone applications in various industries</label></li>
+            <li><input type="checkbox" id="we2"><label for="we2">Q&A sessions with drone experts</label></li>
+            <li><input type="checkbox" id="we3"><label for="we3">Virtual product demonstrations</label></li>
+            <li><input type="checkbox" id="we4"><label for="we4">Industry panel discussions</label></li>
+        </ul>
+
+        <h2>5. Lead Magnets</h2>
+        <ul>
+            <li><input type="checkbox" id="lm1"><label for="lm1">Free drone flight planning template</label></li>
+            <li><input type="checkbox" id="lm2"><label for="lm2">ROI calculator for drone services</label></li>
+            <li><input type="checkbox" id="lm3"><label for="lm3">Checklists for drone regulations compliance</label></li>
+            <li><input type="checkbox" id="lm4"><label for="lm4">Mini-course on getting started with commercial drones</label></li>
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            function updateProgress() {
+                const total = checkboxes.length;
+                const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                const percentage = Math.round((checked / total) * 100);
+                progressBar.style.width = percentage + '%';
+                progressText.textContent = `Progress: ${percentage}%`;
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+
+            updateProgress(); // Initial progress update
+        });
+    </script>
+</body>
+</html>
