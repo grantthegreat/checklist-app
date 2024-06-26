@@ -1,0 +1,98 @@
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Progress } from '@/components/ui/progress';
+
+const ChecklistItem = ({ item, onToggle, isChecked }) => (
+  <div className="flex items-center space-x-2 mb-2">
+    <Checkbox id={item} checked={isChecked} onCheckedChange={() => onToggle(item)} />
+    <label htmlFor={item} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+      {item}
+    </label>
+  </div>
+);
+
+const ChecklistSection = ({ title, items, checkedItems, onToggle }) => (
+  <Card className="mb-4">
+    <CardHeader>
+      <CardTitle>{title}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      {items.map((item) => (
+        <ChecklistItem
+          key={item}
+          item={item}
+          isChecked={checkedItems.includes(item)}
+          onToggle={onToggle}
+        />
+      ))}
+    </CardContent>
+  </Card>
+);
+
+const DroneLeadGenChecklist = () => {
+  const sections = {
+    'Content Marketing': [
+      'Create blog posts on drone applications and industry trends',
+      'Develop e-books on drone technology advancements',
+      'Produce whitepapers on drone regulations and compliance',
+      'Design infographics showcasing drone capabilities',
+      'Record video tutorials on drone operation and maintenance'
+    ],
+    'Email Marketing': [
+      'Set up weekly or bi-weekly newsletter',
+      'Create automated email sequences for new subscribers',
+      'Segment email lists based on industry and interests',
+      'Send periodic special offers or promotions'
+    ],
+    'Social Media': [
+      'Maintain regular posts on LinkedIn, Twitter, and Facebook',
+      'Create engaging visual content for Instagram and YouTube',
+      'Participate in relevant LinkedIn groups and Twitter chats',
+      'Run paid social media advertising campaigns',
+      'Implement an employee advocacy program'
+    ],
+    'Webinars and Virtual Events': [
+      'Host monthly webinars on drone applications',
+      'Conduct Q&A sessions with drone experts',
+      'Offer virtual product demonstrations',
+      'Organize industry panel discussions'
+    ],
+    'Lead Magnets': [
+      'Create a free drone flight planning template',
+      'Develop an ROI calculator for drone services',
+      'Produce checklists for drone regulations compliance',
+      'Design a mini-course on getting started with commercial drones'
+    ]
+  };
+
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  const handleToggle = (item) => {
+    setCheckedItems((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
+  };
+
+  const totalItems = Object.values(sections).flat().length;
+  const progress = (checkedItems.length / totalItems) * 100;
+
+  return (
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Commercial Drone Business Lead Generation Checklist</h1>
+      <Progress value={progress} className="mb-4" />
+      <p className="mb-4">Progress: {checkedItems.length} / {totalItems} ({progress.toFixed(1)}%)</p>
+      {Object.entries(sections).map(([title, items]) => (
+        <ChecklistSection
+          key={title}
+          title={title}
+          items={items}
+          checkedItems={checkedItems}
+          onToggle={handleToggle}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default DroneLeadGenChecklist;
